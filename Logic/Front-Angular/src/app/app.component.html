@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AirB&B</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <header>
+    <app-header></app-header>
+  </header>
+
+  <main>
+    <app-recherche-bien></app-recherche-bien>
+
+    <!-- Affichage dynamique -->
+    <router-outlet></router-outlet>
+  </main>
+
+
+</body>
+
+<footer class="footer">
+  <app-footer></app-footer> <!-- Appel au composant Footer -->
+
+</footer>
+</html>

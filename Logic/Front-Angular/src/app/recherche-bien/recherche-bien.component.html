@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+  <h1>Recherche de biens</h1>
+  <form (ngSubmit)="onSearch(formRef)" #formRef="ngForm">
+        <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="startDate">Date de début de location</label>
+          <input type="date" class="form-control" id="startDate" [(ngModel)]="startDate" name="startDate" required>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="endDate">Date de fin de location</label>
+          <input type="date" class="form-control" id="endDate" [(ngModel)]="endDate" name="endDate" required>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="commune">Commune</label>
+      <input type="text" class="form-control" id="commune" [(ngModel)]="commune" name="commune" required>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="maxPrice">Prix maximum</label>
+          <input type="number" class="form-control" id="maxPrice" [(ngModel)]="maxPrice" name="maxPrice" required>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="minRooms">Nombre de chambres min</label>
+          <input type="number" class="form-control" id="minRooms" [(ngModel)]="minRooms" name="minRooms" required>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="minBeds">Nombre de lit minimum</label>
+          <input type="number" class="form-control" id="minBeds" [(ngModel)]="minBeds" name="minBeds" required>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="maxDistance">Distance max au centre-ville (en mètres)</label>
+          <input type="number" class="form-control" id="maxDistance" [(ngModel)]="maxDistance" name="maxDistance" required>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Rechercher</button>
+  </form>
+</div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

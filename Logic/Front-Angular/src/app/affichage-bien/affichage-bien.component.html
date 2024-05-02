@@ -1,0 +1,113 @@
+<div class="bien-list">
+  <div *ngFor="let bien of biens" class="bien-item">
+    <div class="bien-header">
+      <h3>{{ bien.commune }} - {{ bien.rue }}</h3>
+      <p>Note moyenne : {{ bien.noteMoyenne }}</p>
+    </div>
+    <div class="bien-details">
+      <div class="bien-info">
+        <div class="bien-info-left">
+          <ul>
+            <li><strong>Commune : </strong> <span>{{ bien.commune }}</span></li>
+            <li><strong>Rue : </strong> <span>{{ bien.rue }}</span></li>
+            <li><strong>Nombre de chambres : </strong> <span>{{ bien.nbChambres }}</span></li>
+            <li><strong>Prix par nuit : </strong> <span>{{ bien.prixNuit }} €</span></li>
+          </ul>
+        </div>
+       
+        <div class="bien-info-right">
+          <div class="bien-preview">
+            <img [src]=bien.imageUrl alt="Aperçu du bien">
+          </div>
+        </div>
+        
+      </div>
+      <div class="bien-actions">
+        <button class="btn-details" (click)="afficherDetailsSupplementaires = !afficherDetailsSupplementaires">
+          {{ afficherDetailsSupplementaires ? '-' : '+' }}
+        </button>
+        <button class="btn-reservation" (click)="reserverBien(bien, reservationModal)">Réserver</button>
+        <button class="btn-avis" (click)="ouvrirDialogueAvis(bien, avisModal)">Laisser un avis</button>
+      </div>
+      <div *ngIf="afficherDetailsSupplementaires" class="bien-details-supplementaires">
+        <ul>
+          <li><strong>Adresse e-mail du propriétaire : </strong> <span>{{ bien.mailProprio }}</span></li>
+          <li><strong>Code postal : </strong> <span>{{ bien.cp }}</span></li>
+          <li><strong>Distance : </strong> <span>{{ bien.distance }} km</span></li>
+          <li><strong>Nombre de couchages : </strong> <span>{{ bien.nbCouchages }}</span></li>
+          <!-- Ajoutez d'autres informations supplémentaires ici -->
+        </ul>
+        
+        <div class="bien-map">
+          <sdk-google-map [location]="bien.rue + ', ' + bien.commune" [zoom]="'14'"> </sdk-google-map>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #reservationModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Réserver un bien</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <input type="text" placeholder="Mail du loueur" [(ngModel)]="mailLoueur" />
+    <input type="date" placeholder="Date de début" [(ngModel)]="dateDebut" />
+    <input type="date" placeholder="Date de fin" [(ngModel)]="dateFin" />
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="enregistrerReservation(reservationModal); modal.close('Save click')">Réserver</button>
+  </div>
+</ng-template>
+
+<ng-template #avisModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Laisser un avis</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <input type="number" [(ngModel)]="note" placeholder="Note (1-5)" min="1" max="5">
+    <textarea [(ngModel)]="commentaire" placeholder="Commentaire"></textarea>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="enregistrerAvis(avisModal); modal.close('Save click')">Envoyer</button>
+  </div>
+</ng-template>
+
+<ngb-toast
+  *ngIf="showSuccessToast"
+  header="Succès"
+  (hide)="showSuccessToast = false"
+>
+  {{ toastMessage }}
+</ngb-toast>
+
+<ngb-toast
+  *ngIf="showErrorToast"
+  header="Erreur"
+  (hide)="showErrorToast = false"
+>
+  {{ toastMessage }}
+</ngb-toast>
+
+<ngb-toast
+  *ngIf="showSuccessAvisToast"
+  header="Succès"
+  (hide)="showSuccessAvisToast = false"
+>
+  {{ avisToastMessage }}
+</ngb-toast>
+
+<ngb-toast
+  *ngIf="showErrorAvisToast"
+  header="Erreur"
+  (hide)="showErrorAvisToast = false"
+>
+  {{ avisToastMessage }}
+</ngb-toast>
+
